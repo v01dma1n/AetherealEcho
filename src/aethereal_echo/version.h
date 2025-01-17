@@ -37,7 +37,7 @@
 
 /* Version history
 
-2025-01-15 v.0.19 Restored defaults for DNS servers
+2025-01-15 v.0.20  Restored defaults for DNS servers
 - Restored defaults for DNS servers, which were removed after String to char* conversion
 
 2025-01-15 v.0.19 Meter reflects now the state
