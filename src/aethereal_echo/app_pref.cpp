@@ -33,32 +33,32 @@ void AppPreferences::getPreferences() {
   prefs.getString(APP_PREF_TIME_ZONE, config.time_zone,
                   sizeof(config.time_zone));
 
-  prefs.getString(APP_PREF_PING_IP1, config.pingIPs[0],
-                  sizeof(config.pingIPs[0]));
-  prefs.getString(APP_PREF_PING_IP2, config.pingIPs[1],
-                  sizeof(config.pingIPs[1]));
-  prefs.getString(APP_PREF_PING_IP3, config.pingIPs[2],
-                  sizeof(config.pingIPs[2]));
-  prefs.getString(APP_PREF_PING_IP4, config.pingIPs[3],
-                  sizeof(config.pingIPs[3]));
+  if (prefs.getString(APP_PREF_PING_IP1, config.pingIPs[0], sizeof(config.pingIPs[0])) == 0)
+      strcpy(config.pingIPs[0], AE_IP_CLOUDFLARE); 
+  if (prefs.getString(APP_PREF_PING_IP2, config.pingIPs[1], sizeof(config.pingIPs[1])) == 0)
+      strcpy(config.pingIPs[1], AE_IP_GOOGLE); 
+  if (prefs.getString(APP_PREF_PING_IP3, config.pingIPs[2], sizeof(config.pingIPs[2])) == 0)
+      strcpy(config.pingIPs[2], AE_IP_QUAD9); 
+  if (prefs.getString(APP_PREF_PING_IP4, config.pingIPs[3], sizeof(config.pingIPs[3])) == 0)
+      strcpy(config.pingIPs[3], AE_IP_OPENDNS); 
 
-  config.curPingIPIndex = prefs.getInt(APP_PREF_PING_IP_INDEX, 1);
+  config.curPingIPIndex = prefs.getInt(APP_PREF_PING_IP_INDEX, 1); // first IP address selected
   if (config.curPingIPIndex < 1)
     config.curPingIPIndex = 1;
   else if (config.curPingIPIndex > PING_IP_COUNT)
     config.curPingIPIndex = PING_IP_COUNT;
 
-  config.pingIntervalSec = prefs.getInt(APP_PREF_PING_INTERVAL_SEC, 3);
+  config.pingIntervalSec = prefs.getInt(APP_PREF_PING_INTERVAL_SEC, 3); // ping interval
   if (config.pingIntervalSec < 3)
     config.pingIntervalSec = 3;
   else if (config.pingIntervalSec > MAX_PING_INTERVAL_SEC)
     config.pingIntervalSec = MAX_PING_INTERVAL_SEC;
 
-  config.pingSoundOn = prefs.getBool(APP_PREF_PING_SOUND_ON, true);
-  config.alertOn = prefs.getBool(APP_PREF_ALERT_ON, true);
-  config.logLevel =
-      prefs.getInt(APP_PREF_LOG_LEVEL, int32_t(ESP32LogLevel::Info));
+  config.pingSoundOn = prefs.getBool(APP_PREF_PING_SOUND_ON, true); // ping sound on
+  config.alertOn = prefs.getBool(APP_PREF_ALERT_ON, true); // aler sound on
 
+  config.logLevel =
+      prefs.getInt(APP_PREF_LOG_LEVEL, int32_t(ESP32LogLevel::Info)); // debug level Info
   if (config.logLevel < int32_t(ESP32LogLevel::Error))
     config.logLevel = int32_t(ESP32LogLevel::Error);
   else if (config.logLevel > int32_t(ESP32LogLevel::Debug))

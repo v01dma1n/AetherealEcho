@@ -14,6 +14,12 @@
 #define GPIO_LED2_G 26
 #define GPIO_LED2_B 33
 
+// AE 
+#define AE_IP_CLOUDFLARE "1.1.1.1"
+#define AE_IP_GOOGLE     "8.8.8.8"
+#define AE_IP_QUAD9      "9.9.9.9"
+#define AE_IP_OPENDNS    "208.67.222.222"
+
 #define WIFI_CONN_ATTEMPTS 20
 #define AP_REBOOT_TIME_MILLIS                                                  \
   10 * 60 * 1000 // how frequently to reboot Access Point if no connection in ms

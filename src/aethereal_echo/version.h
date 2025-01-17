@@ -1,9 +1,9 @@
 #define APP_NAME "Aethereal Echo"
 #define APP_AUTHOR "v01dma1n"
-#define APP_DATE "2025-01-15"
+#define APP_DATE "2025-01-16"
 
 #define VER_MAJOR 0
-#define VER_MINOR 19
+#define VER_MINOR 20
 #define VER_BUILD 0
 
 #include <string>
@@ -12,7 +12,7 @@
   (std::to_string(VER_MAJOR) + "." + std::to_string(VER_MINOR) + "." +         \
    std::to_string(VER_BUILD))
 
-/* Known Problem
+/* Known Problems
 
   #issue001 The TimedTransition is not reset after NextIP selection and times
   out after predefined interval. This may be a problem in the library or due to
@@ -31,9 +31,14 @@
   captured only after long touch ends.
 
   #issue012 AP seems to time out too early
+
+  #issue013  "setenv("TZ", config.time_zone, 1);" should not bin in preferences modlue
 */
 
 /* Version history
+
+2025-01-15 v.0.19 Restored defaults for DNS servers
+- Restored defaults for DNS servers, which were removed after String to char* conversion
 
 2025-01-15 v.0.19 Meter reflects now the state
 - Meter states for 'no wifi', 'ping timeout and 'AP running' added
