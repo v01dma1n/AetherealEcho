@@ -1,0 +1,6 @@
+*.gcode
+*.zip
+Experimental
+*~
+src.test/
+src.txt/
