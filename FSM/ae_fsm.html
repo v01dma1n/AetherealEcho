@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>GraphVizArt</title>
+</head>
+<body>
+<a href='http://gravizo.com/'><img src='https://g.gravizo.com/svg?digraph G {
+	rankdir=LR; pad=0.5
+	node [shape=circle fixedsize=true width=1.5];
+	"boot: Aethereal Echo v.0.21.0" -> "wifi_connected" [label="tr_wifi_connected (ID=1)"];
+	"boot: Aethereal Echo v.0.21.0" -> "ap_running" [label="tr_wifi_not_connected (ID=2)"];
+	"ap_running" -> "reboot" [label="trp_config_ok (ID=7)"];
+	"ap_running" -> "reboot" [label="tr_ap_long_press (ID=13)"];
+	"ap_running" -> "ap_running" [label="tr_ap_config_err (ID=8)"];
+	"wifi_connected" -> "ap_running" [label="tr_ap_long_press (ID=13)"];
+	"ping" -> "ping_alert" [label="tr_ping_timeout (ID=9)"];
+	"ping" -> "wifi_connected" [label="tr_ping_ok (ID=10)"];
+	"ping" -> "wifi_alert" [label="tr_wifi_lost (ID=3)"];
+	"ping_alert" -> "wifi_connected" [label="tr_ping_alert_end (ID=11)"];
+	"ping_alert" -> "reboot" [label="tr_ping_timeout_max (ID=12)"];
+	"ping_alert" -> "ip_select" [label="tr_ip_select_long_press (ID=16)"];
+	"ping_alert" -> "ap_running" [label="tr_ap_long_press (ID=13)"];
+	"wifi_connected" -> "ip_select" [label="tr_ip_select_long_press (ID=16)"];
+	"ip_select" -> "ip_next" [label="tr_ip_select_short_press (ID=15)"];
+	"ip_select" -> "wifi_connected" [label="tr_ip_select_long_press (ID=16)"];
+	"ip_next" -> "ip_select" [label="tr_ip_select_done (ID=17)"];
+	"wifi_connected" -> "ping_sound_select" [label="tr_ping_sound_long_press (ID=19)"];
+	"ping_sound_select" -> "ping_sound_switch" [label="tr_ping_sound_short_press (ID=18)"];
+	"ping_sound_select" -> "wifi_connected" [label="tr_ping_sound_long_press (ID=19)"];
+	"ping_sound_switch" -> "ping_sound_select" [label="tr_ping_sound_select_done (ID=20)"];
+	"wifi_connected" -> "alert_enabled_select" [label="tr_alert_enabled_long_press (ID=22)"];
+	"alert_enabled_select" -> "alert_enabled_switch" [label="tr_alert_enabled_short_press (ID=21)"];
+	"alert_enabled_select" -> "wifi_connected" [label="tr_alert_enabled_long_press (ID=22)"];
+	"alert_enabled_switch" -> "alert_enabled_select" [label="tr_alert_enabled_select_done (ID=23)"];
+	"wifi_connected" -> "wifi_alert" [label="tr_wifi_lost (ID=3)"];
+	"wifi_alert" -> "wifi_disconnected" [label="tr_wifi_alert_end (ID=4)"];
+	"wifi_alert_switch" -> "wifi_alert" [label="tr_wifi_alert_switch_end (ID=5)"];
+	"wifi_disconnected" -> "wifi_connected" [label="tr_wifi_reconnected (ID=6)"];
+	"ap_running" -> "reboot" [label=" (180000ms)"];
+	"wifi_connected" -> "ping" [label=" (10000ms)"];
+	"ping_alert" -> "ping" [label=" (3000ms)"];
+	"ip_select" -> "wifi_connected" [label=" (20000ms)"];
+	"ping_sound_select" -> "wifi_connected" [label=" (20000ms)"];
+	"alert_enabled_select" -> "wifi_connected" [label=" (20000ms)"];
+	"wifi_alert" -> "wifi_alert_switch" [label=" (250ms)"];
+	"wifi_alert" -> "wifi_disconnected" [label=" (20000ms)"];
+	"wifi_disconnected" -> "reboot" [label=" (10000ms)"];
+	"boot: Aethereal Echo v.0.21.0" [shape=ellipse style=filled fontcolor=white fillcolor=black];
+}
+'/></a></body>
+</html>

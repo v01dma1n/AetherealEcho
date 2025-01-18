@@ -7,8 +7,8 @@
 #include "aethereal_echo.h"
 #include "app_pref.h"
 #include "melody.h"
+#include "version.h"
 #include "wifi_connect.h"
-#include "ae_fsm_config.h" // Include the new header
 
 SimpleFSM fsm;
 
@@ -84,26 +84,31 @@ int numTransitions = sizeof(transitions) / sizeof(Transition);
 int numTimedTransitions = sizeof(timedTransitions) / sizeof(TimedTransition);
 
 void aeFsmSetup() {
+
   // tweak the timed transitions based on the configuration
   timedTransitions[TTR_WIFI_CONNECTED_TO_PING].setup(&s[ST_WIFI_CONNECTED], &s[ST_PING],
                                                      appPrefs.config.pingIntervalSec * 1000);
   fsm.add(transitions, numTransitions);
   fsm.add(timedTransitions, numTimedTransitions);
+
   fsm.setInitialState(&s[ST_BOOT]);
 };
 
 void aeFsmLoop() { fsm.run(FSM_RUN_MILLIS, fsm_tick); };
 
 String aeShowGraph() {
-    String message = "";
-    message += F("\n");
-    message += F("\n");
-    message += F("\n");
-    message += F("GraphVizArt\n");
-    message += F("\n");
-    message += F("\n");
-    message += F(" <http://gravizo.com/>");
-    message += F("\n");
-    message += F("\n");
-    return message;
-}
+  String message = "";
+  message += F("<html>\n");
+  message += F("<head>\n");
+  message += F("<meta http-equiv='refresh' content='1'>\n");
+  message += F("<title>GraphVizArt</title>\n");
+  message += F("</head>\n");
+  message += F("<body>\n");
+  message +=
+      F("<a href='http://gravizo.com/'><img src='https://g.gravizo.com/svg?");
+  message += fsm.getDotDefinition();
+  message += F("'/></a>");
+  message += F("</body>\n");
+  message += F("</html>\n");
+  return message;
+};
