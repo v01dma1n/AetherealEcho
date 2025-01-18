@@ -4,23 +4,23 @@ The purpose of this build was to utilize nearly 100 years old wooden box with a 
 
 ## Main Functions
 
-### Connecting to WiFi and network access configuration
-- The aethereal_echo program implemented with ESP32 connects to a local WiFi after power on.
-- If ESP32 cannot connect to the local WiFi, it starts an Access Point with a captive portal. The AP is advertised as aethereal_echo WiFi.
-- User needs to connect to the AP WiFi and navigate to the IP address 192.168.4.1 with a browser.
-- The page allows entering the WiFi name and password.  After page submission the ESP32 reboots and makes another attempt to connect to local WiFi.
+### Wi-Fi Connection and Network Configuration
+- The Aethereal Echo, powered by an ESP32, attempts to connect to a local Wi-Fi network upon startup.
+- If the device fails to connect to the configured Wi-Fi network, it activates an Access Point (AP) with a captive portal. The AP's SSID is broadcast as "aethereal-echo".
+- Users can connect to this Wi-Fi network and navigate to the IP address 192.168.4.1 using a web browser.
+- A configuration page is presented allowing users to enter the local Wi-Fi network's name (SSID) and password. Upon submission, the ESP32 will reboot and attempt to connect to the specified Wi-Fi network.
 
-### Pinging predefined servers
-- The aethereal_echo pings selected server with a period defined in the configuration.
-- If the ping is successful, the meter indicates ping time on the scale and AE confirms with a ping sound
-- If the ping times out, the meter indicats "Echo Timeout" at 1000 mTicks
-  - After several unsuccessfult pings, aethereal_echo starts an alert with sound and flashing blue and red lights.
-  - Afterwards, it switches to the next IP and reboots.
+### Pinging Predefined Servers
+- Aethereal Echo periodically pings a configurable server, with the interval between pings defined in the settings.◦
+- If a ping is successful, the meter's needle displays the ping time on its scale, and a short ping sound is played as confirmation.
+- If a ping times out, the meter indicates an "Echo Timeout" by moving to 1000 mTicks (maximum scale position).
+- After several consecutive failed pings, Aethereal Echo initiates an alert, which includes sound and alternating red and blue flashing LEDs.
+- Following an alert, the device automatically switches to the next configured ping server and reboots.
 
-#### Monitoring WiFi access
-- After initial successful connection to WiFi aethereal_echo monitors network connection
-- If the connecion to WiFi fails, aethereal_echo starts an alert with sound and flashing blue and red lights.
-- Afterwards, aethereal_echo reboots.
+### Wi-Fi Access Monitoring
+- After a successful initial connection to a Wi-Fi network, the Aethereal Echo continuously monitors its connection status.
+- If the Wi-Fi connection is lost, Aethereal Echo starts an alert with a sound and alternating red and blue flashing LEDs.
+- The device will then attempt to reconnect to the WiFi network or reboot
 
 ### Using touch controls
 - 
