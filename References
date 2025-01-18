@@ -6,3 +6,22 @@ Ornaments
         
 Fonts
   https://www.fontspace.com/search?q=victorian
+  
+Libraries
+- AsyncTCP 1.1.4 
+	https://github.com/dvarrel/AsyncTCP
+- ESP Async Webserver 3.6.0
+	https://github.com/mathieucarbou/ESPAsyncWebServer
+- ESP32Logger 1.0.3
+	https://github.com/zimbora/ESP32Logger2
+- ESPPing 1.0.5
+	https://github.com/zimbora/ESP32Logger2
+- SimpleFSM 1.3.1
+	https://github.com/LennartHennigs/SimpleFSM
+- Preferences v.3.0.7 
+- FS v.3.0.7 
+- WiFi v.3.0.7 
+- Networking v.3.0.7 
+- DNSServer v.3.0.7 
+- ESP32 Async UDP v.3.0.7 
+
