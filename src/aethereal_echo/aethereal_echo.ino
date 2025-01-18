@@ -2,7 +2,7 @@
 #include <ESP32Logger.h>
 
 #include "access_point.h"
-#include "ae_state_machine.h"
+#include "ae_fsm_config.h"
 #include "aethereal_echo.h"
 #include "app_pref.h"
 #include "led_rgb.h"

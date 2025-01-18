@@ -1,9 +1,9 @@
 #define APP_NAME "Aethereal Echo"
 #define APP_AUTHOR "v01dma1n"
-#define APP_DATE "2025-01-16"
+#define APP_DATE "2025-01-17"
 
 #define VER_MAJOR 0
-#define VER_MINOR 20
+#define VER_MINOR 21
 #define VER_BUILD 0
 
 #include <string>
@@ -36,6 +36,11 @@
 */
 
 /* Version history
+
+2025-01-17 v.0.1 FSM is now split into config and execute
+- FSM is now split into config and execute
+- AE is now on GitHub
+
 
 2025-01-15 v.0.20  Restored defaults for DNS servers
 - Restored defaults for DNS servers, which were removed after String to char* conversion
