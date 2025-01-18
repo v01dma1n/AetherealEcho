@@ -1,9 +1,9 @@
 #define APP_NAME "Aethereal Echo"
 #define APP_AUTHOR "v01dma1n"
-#define APP_DATE "2025-01-17"
+#define APP_DATE "2025-01-18"
 
 #define VER_MAJOR 0
-#define VER_MINOR 21
+#define VER_MINOR 22
 #define VER_BUILD 0
 
 #include <string>
@@ -32,12 +32,19 @@
 
   #issue012 AP seems to time out too early
 
-  #issue013  "setenv("TZ", config.time_zone, 1);" should not bin in preferences modlue
+  #issue013 "setenv("TZ", config.time_zone, 1);" should not bin in preferences modlue
+
+  #issue014 State graph does not have a version information - nice to have
+  This in aeFsmSetup() creates too long string, which does not fit the state cirle.
+  s[ST_BOOT].setName(s[ST_BOOT].getName() + String(": ") + String(APP_NAME) + String(" v.") + String(VERSION_STRING.c_str()));
 */
 
 /* Version history
 
-2025-01-17 v.0.1 FSM is now split into config and execute
+2025-01-18 v.0.22 The FSM graph construction fixed
+- The FSM graph construction fixed afer the code was lost.
+
+2025-01-17 v.0.21 FSM is now split into config and execute
 - FSM is now split into config and execute
 - AE is now on GitHub
 
