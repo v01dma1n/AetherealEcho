@@ -3,7 +3,7 @@
 #define APP_DATE "2025-01-18"
 
 #define VER_MAJOR 0
-#define VER_MINOR 22
+#define VER_MINOR 23
 #define VER_BUILD 0
 
 #include <string>
@@ -40,6 +40,11 @@
 */
 
 /* Version history
+
+2025-01-18 v.0.23 No Newline fixed
+- No Newline fixed
+- References updated
+
 
 2025-01-18 v.0.22 The FSM graph construction fixed
 - The FSM graph construction fixed afer the code was lost.
@@ -133,11 +138,7 @@
 */
 
 /* ToDo
-- Implement state machine
 - Make sure that we can reset() the TimedTransition
-- Demo
-- Backlight on/of
 - MQTT
-- LED color adjustments
-
+- LED color intensity adjustments
 */
