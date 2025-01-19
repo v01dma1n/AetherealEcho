@@ -1,69 +1,50 @@
-# Aethereal Echo
-Aethereal Echo is ESP32-based WFi and ping monitor embedded in vintage millivolt meter.
-The purpose of this build was to utilize nearly 100 years old meter in oak wood box.
+# **Aethereal Echo: ESP32-Based Wi-Fi and Ping Monitor**
 
-## Main Functions
+The Aethereal Echo is a project that combines modern technology with a vintage aesthetic. It utilizes an **ESP32** microcontroller to create a Wi-Fi and ping monitor, all housed within a nearly **100-year-old millivolt meter** original oak wood box.
 
-### Wi-Fi Connection and Network Configuration
-- The Aethereal Echo, powered by an ESP32, attempts to connect to a local Wi-Fi network upon startup.
-- If the device fails to connect to the configured Wi-Fi network, it activates an Access Point (AP) with a captive portal. The AP's SSID is broadcast as "aethereal-echo".
-- Users can connect to this Wi-Fi network and navigate to the IP address 192.168.4.1 using a web browser.
-- A configuration page is presented allowing users to enter the local Wi-Fi network's name (SSID) and password. Upon submission, the ESP32 will reboot and attempt to connect to the specified Wi-Fi network.
+## **Key Functions**
 
-### Pinging Predefined Servers
-- Aethereal Echo periodically pings a configurable server, with the interval between pings defined in the settings.◦
-- If a ping is successful, the meter's needle displays the ping time on its scale, and a short ping sound is played as confirmation.
-- If a ping times out, the meter indicates an "Echo Timeout" by moving to 1000 mTicks (maximum scale position) and a 'sad' sound is played.
-- After several consecutive failed pings, Aethereal Echo initiates an alert, which includes sound and alternating red and blue flashing LEDs.
-- Following an alert, the device automatically switches to the next configured ping server and reboots.
+### **Wi-Fi Connection and Network Configuration**
+*   Upon startup, the Aethereal Echo attempts to connect to a preconfigured local **Wi-Fi network**.
+*   If the device cannot connect to the configured network, it activates an **Access Point (AP)**, broadcasting an SSID named "aethereal-echo".
+*   Users can connect to this Wi-Fi network and access a configuration page at the IP address **192.168.4.1** via a web browser.
+*   The configuration page allows users to input the local Wi-Fi network's name (SSID) and password. After submitting this information, the ESP32 will reboot and attempt to connect to the specified Wi-Fi network.
 
-### Wi-Fi Access Monitoring
-- After a successful initial connection to a Wi-Fi network, the Aethereal Echo continuously monitors its connection status.
-- If the Wi-Fi connection is lost, Aethereal Echo starts an alert with a sound and alternating red and blue flashing LEDs.
-- The device will then attempt to reconnect to the WiFi network or reboot
+### **Pinging Predefined Servers**
+*   The Aethereal Echo periodically pings a configurable server.
+*   The time between pings can be set in the device's settings.
+*   If a ping is successful, the meter's needle displays the **ping time** on its scale. A short **ping sound** is also played as confirmation.
+*   If a ping times out, the meter indicates an "**Echo Timeout**" by moving to the maximum position on its scale (1000 mTicks), accompanied by a 'sad' sound.
+*   After several consecutive failed pings, Aethereal Echo initiates an alert with a sound and **alternating red and blue flashing LEDs**.
+*   Following an alert, the device automatically switches to the next configured **ping server** and reboots. There are four ping server addresses that can be configured.
 
-### Using touch controls
-- There are four touch termnials on the fron panel:
-  - Activate Access Point
-  - Select target server IP for ping
-  - Turn on or off ping sound
-  - Turn on or off alert sound
-- Each of the functions is activated by 'long touch', which is at least 3 seconds
-- After the function is activated, Aetheral Echo confirms with a sound.
-- Value change can be achieved by 'short touch', which is less than 0.5 second
-  - Note: the Access Point function does not have 'short touch' settings and it is activated immediately.
-- Aethereal Echo confirms value change with a sound and meter indication
-  - The target server IP change is confirmed by sound, meter pointing at given server (beacon) and ligth in corresponding color.
-  - The sound on and off selected value is indicated by meter pointing at Yes or No and sound
+### **Wi-Fi Access Monitoring**
+*   After a successful initial connection to a Wi-Fi network, the Aethereal Echo continuously monitors its connection status.
+*   If the Wi-Fi connection is lost, the device initiates an alert, which includes a sound and alternating red and blue flashing LEDs.
+*   The device will attempt to reconnect to the Wi-Fi network or reboot if reconnection fails.
 
-#### Turning on the Access Point
-- To turn on the Access Point, use 'long touch' with Access Point touch terminal.
-  - Upon successful Acces Point activation, Aethereal Echo will confirm with a sound.
-- While the Access Point is running, you can use 'long touch' to exit and reboot Aethereal Echo
-- See Access Point Captive Portal for details on how to use it.
+### **Touch Controls**
+*   The Aethereal Echo has four touch-sensitive terminals on the front panel.
+*   These terminals are used to control the device:
+    *   **Activate Access Point**
+    *   **Select Target Server IP for Pinging**
+    *   **Turn On or Off Ping Sound**
+    *   **Turn On or Off Alert Sound**
+*   Each function is activated by a **'long touch'**, which is a touch of at least 3 seconds.
+*   After a function is activated, the Aethereal Echo will confirm with a sound.
+*   Value changes can be achieved by a **'short touch'**, which is a touch of less than 0.5 seconds.
+*   The Access Point function does not have 'short touch' settings and is activated immediately by a 'long touch'.
+*   Aetheral Echo confirms value change with a sound and meter indication.
+*   When changing the target server IP, the device will play a sound, the meter will point to the selected server and a light will turn on in the color associated with the target server.
+*   When turning the ping or alert sound on and off, the meter will point to 'Yes' or 'No', and a corresponding sound will play.
 
-#### Changing the target ping server
-- To activave selection of ping server, use 'long touch' with Ping server touch terminal.
-  - Upon successful selection mode activation, Aethereal Echo will confirm with a sound.
-  - Aethereal Echo will turn ligth to a color of the currently select ping sever and meter will indicate the ping server on the scale
-- To advance to the next ping server, use 'short touch'
-- Aethereal Echo will turn ligth to a color of the currently select ping sever and meter will indicate the ping server on the scale.
-- The ping server address selection happens in round robin fashion for all 4 addresses
-- You can use 'long touch' to get back to pinging or just wait 30 seconds for the device to start pinging on its own
+#### **Detailed Touch Control Instructions**
 
-#### Turning on and off ping sound
-- To activave selection of Ping Sound switching, use 'long touch' with Ping Sound touch terminal.
-   - Upon successful selection mode activation, Aethereal Echo will confirm with a sound.
-   - Aethereal Echo will point the meter to the currently selected value (Yes/No) and play corresponding sound.
-- To switch the Ping Sound on and off, use 'short touch'.  Eevery time the device will adjust the meter and play corresponding sound.
-- You can use 'long touch' to get back to pinging or just wait 30 seconds for the device to start pinging on its own
-  
-#### Turning on and off alert sound
-- To activave selection of Alert Sound switching, use 'long touch' with Alert Sound touch terminal.
-   - Upon successful selection mode activation, Aethereal Echo will confirm with a sound.
-   - Aethereal Echo will point the meter to the currently selected value (Yes/No) and play corresponding sound.
-- To switch the Alert Sound on and off, use 'short touch'.  Eevery time the device will adjust the meter and play corresponding sound.
-- You can use 'long touch' to get back to pinging or just wait 30 seconds for the device to start pinging on its own
+*   **Turning on the Access Point:** Use a 'long touch' on the Access Point touch terminal. Upon successful activation, the device will confirm with a sound. While the Access Point is running, you can exit and reboot the device with another 'long touch'. See "Access Point Captive Portal" for details.
+*  **Changing the target ping server**: To enter ping server selection mode, use a 'long touch' on the Ping server touch terminal. The device will confirm with a sound, turn a light on in the color of the currently selected ping server, and the meter will indicate the ping server on its scale. To advance to the next ping server, use a 'short touch'. The selection will cycle through the 4 available addresses. You can exit the selection mode with a 'long touch' or by waiting 30 seconds. The device will then resume pinging.
+*   **Turning on and off the Ping sound**: To enter the ping sound selection mode, use a 'long touch' on the Ping Sound touch terminal. The device will confirm with a sound, and the meter will indicate the current value ('Yes' or 'No') accompanied by a sound. Use a 'short touch' to toggle the ping sound on and off. The meter will adjust and a corresponding sound will play with each change. You can exit the selection mode with a 'long touch' or by waiting 30 seconds.
+*   **Turning on and off the Alert sound**: To enter the alert sound selection mode, use a 'long touch' on the Alert Sound touch terminal. The device will confirm with a sound, and the meter will indicate the current value ('Yes' or 'No') accompanied by a sound. Use a 'short touch' to toggle the alert sound on and off. The meter will adjust and a corresponding sound will play with each change. You can exit the selection mode with a 'long touch' or by waiting 30 seconds.
+
 
 ### Turning on and off top light
 -
