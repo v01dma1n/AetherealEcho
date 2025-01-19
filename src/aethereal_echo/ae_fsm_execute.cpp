@@ -172,7 +172,7 @@ void on_enter_ping_sound_select() {
     }
 };
 
-void on_enter_ping_sound_switch() {
+void on_enter_ping_sound_toggle() {
     DBGLOG(Debug, ".");
     // get the current state of the ping_sound
     pingSoundOn = appPrefs.config.pingSoundOn;
@@ -205,7 +205,7 @@ void on_enter_alert_enabled_select() {
     }
 };
 
-void on_enter_alert_enabled_switch() {
+void on_enter_alert_enabled_toggle() {
     DBGLOG(Debug, ".");
     // get the current state of the ping_sound
    alertOn = appPrefs.config.alertOn;
@@ -227,26 +227,26 @@ void on_enter_wifi_alert() {
 
 bool wifiAlertOn {false};
 
-void on_enter_wifi_alert_switch(){
+void on_enter_wifi_alert_toggle(){
     wifiAlertOn = !wifiAlertOn;
     if (wifiAlertOn) {
           // turn on red instantaneously
         pingRGBTimer1.setTransitionMs(0);
         pingRGBTimer1.setOutput(1, 0, 0);
          // fade away blue
-       pingRGBTimer2.setTransitionMs(WIFI_ALERT_SWITCH_MILLIS);
+       pingRGBTimer2.setTransitionMs(WIFI_ALERT_TOGGLE_MILLIS);
       pingRGBTimer2.setOutput(0, 0, 0);
     }
     else {
           // fade away red
-      pingRGBTimer1.setTransitionMs(WIFI_ALERT_SWITCH_MILLIS);
+      pingRGBTimer1.setTransitionMs(WIFI_ALERT_TOGGLE_MILLIS);
        pingRGBTimer1.setOutput(0, 0, 0);
        // turn on blue instantaneously
         pingRGBTimer2.setTransitionMs(0);
        pingRGBTimer2.setOutput(0, 0, 1);
     };
     playMelodyAsync(GPIO_BUZZER, MELODY_WIFI_DISCONNECTED);
-   fsm.trigger(tr_wifi_alert_switch_end);
+   fsm.trigger(tr_wifi_alert_toggle_end);
 };
 
 

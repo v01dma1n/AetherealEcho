@@ -22,11 +22,11 @@ State s[NUM_OF_STATES] = {
     State("ip_select", on_enter_ip_select, NULL, on_exit_ip_select),
     State("ip_next", on_enter_ip_next),
     State("ping_sound_select", on_enter_ping_sound_select),
-    State("ping_sound_switch", on_enter_ping_sound_switch),
+    State("ping_sound_toggle", on_enter_ping_sound_toggle),
     State("alert_enabled_select", on_enter_alert_enabled_select),
-    State("alert_enabled_switch", on_enter_alert_enabled_switch),
+    State("alert_enabled_toggle", on_enter_alert_enabled_toggle),
     State("wifi_alert", on_enter_wifi_alert),
-    State("wifi_alert_switch", on_enter_wifi_alert_switch),
+    State("wifi_alert_toggle", on_enter_wifi_alert_toggle),
     State("wifi_disconnected", on_enter_wifi_disconnected),
     State("reboot", on_enter_reboot)
 };
@@ -53,17 +53,17 @@ Transition transitions[] = {
     Transition(&s[ST_IP_NEXT], &s[ST_IP_SELECT], tr_ip_select_done, NULL,"tr_ip_select_done"),
     // ping sound on or off
     Transition(&s[ST_WIFI_CONNECTED], &s[ST_PING_SOUND_SELECT], tr_ping_sound_long_press, NULL, "tr_ping_sound_long_press"),
-    Transition(&s[ST_PING_SOUND_SELECT], &s[ST_PING_SOUND_SWITCH],tr_ping_sound_short_press, NULL, "tr_ping_sound_short_press"),
+    Transition(&s[ST_PING_SOUND_SELECT], &s[ST_PING_SOUND_TOGGLE],tr_ping_sound_short_press, NULL, "tr_ping_sound_short_press"),
     Transition(&s[ST_PING_SOUND_SELECT], &s[ST_WIFI_CONNECTED],tr_ping_sound_long_press, NULL, "tr_ping_sound_long_press"),
-    Transition(&s[ST_PING_SOUND_SWITCH], &s[ST_PING_SOUND_SELECT],tr_ping_sound_select_done, NULL, "tr_ping_sound_select_done"),
+    Transition(&s[ST_PING_SOUND_TOGGLE], &s[ST_PING_SOUND_SELECT],tr_ping_sound_select_done, NULL, "tr_ping_sound_select_done"),
     // alert enabled on or off
     Transition(&s[ST_WIFI_CONNECTED], &s[ST_ALERT_ENABLED_SELECT], tr_alert_enabled_long_press, NULL,"tr_alert_enabled_long_press"),
-    Transition(&s[ST_ALERT_ENABLED_SELECT], &s[ST_ALERT_ENABLED_SWITCH],tr_alert_enabled_short_press, NULL,"tr_alert_enabled_short_press"),
+    Transition(&s[ST_ALERT_ENABLED_SELECT], &s[ST_ALERT_ENABLED_TOGGLE],tr_alert_enabled_short_press, NULL,"tr_alert_enabled_short_press"),
     Transition(&s[ST_ALERT_ENABLED_SELECT], &s[ST_WIFI_CONNECTED],tr_alert_enabled_long_press, NULL,"tr_alert_enabled_long_press"),
-    Transition(&s[ST_ALERT_ENABLED_SWITCH], &s[ST_ALERT_ENABLED_SELECT],tr_alert_enabled_select_done, NULL,"tr_alert_enabled_select_done"),
+    Transition(&s[ST_ALERT_ENABLED_TOGGLE], &s[ST_ALERT_ENABLED_SELECT],tr_alert_enabled_select_done, NULL,"tr_alert_enabled_select_done"),
     Transition(&s[ST_WIFI_CONNECTED], &s[ST_WIFI_ALERT], tr_wifi_lost, NULL,"tr_wifi_lost"),
     Transition(&s[ST_WIFI_ALERT], &s[ST_WIFI_DISCONNECTED], tr_wifi_alert_end, NULL,"tr_wifi_alert_end"),
-    Transition(&s[ST_WIFI_ALERT_SWITCH], &s[ST_WIFI_ALERT], tr_wifi_alert_switch_end,NULL, "tr_wifi_alert_switch_end"),
+    Transition(&s[ST_WIFI_ALERT_TOGGLE], &s[ST_WIFI_ALERT], tr_wifi_alert_toggle_end,NULL, "tr_wifi_alert_toggle_end"),
     Transition(&s[ST_WIFI_DISCONNECTED], &s[ST_WIFI_CONNECTED],tr_wifi_reconnected, NULL, "tr_wifi_reconnected"),
 };
 
@@ -73,9 +73,9 @@ TimedTransition timedTransitions[NUM_OF_TTR] = {
     TimedTransition(&s[ST_WIFI_CONNECTED], &s[ST_PING], WIFI_CONNECTED_TO_PING_MILLIS), // how frequently to ping
     TimedTransition(&s[ST_PING_ALERT], &s[ST_PING], PING_ALERT_MILLIS), // how long ping alert lastas
     TimedTransition(&s[ST_IP_SELECT], &s[ST_WIFI_CONNECTED], IP_SELECT_TO_WIFI_CONNECTED_MILLIS), // IP selection mode timeout
-    TimedTransition(&s[ST_PING_SOUND_SELECT], &s[ST_WIFI_CONNECTED], PING_SOND_SELECT_TO_WIFI_CONNECTED_MILLIS), // ping sound enabled/disabbled timeout
+    TimedTransition(&s[ST_PING_SOUND_SELECT], &s[ST_WIFI_CONNECTED], PING_SOUND_SELECT_TO_WIFI_CONNECTED_MILLIS), // ping sound enabled/disabbled timeout
     TimedTransition(&s[ST_ALERT_ENABLED_SELECT], &s[ST_WIFI_CONNECTED], ALERT_ENABLED_SELECT_TO_WIFI_CONNECTED_MILLIS), // ping alert enabled/disabbled timeout
-    TimedTransition(&s[ST_WIFI_ALERT], &s[ST_WIFI_ALERT_SWITCH],WIFI_ALERT_SWITCH_MILLIS),
+    TimedTransition(&s[ST_WIFI_ALERT], &s[ST_WIFI_ALERT_TOGGLE],WIFI_ALERT_TOGGLE_MILLIS),
     TimedTransition(&s[ST_WIFI_ALERT], &s[ST_WIFI_DISCONNECTED],WIFI_ALERT_TO_DISCONNECTED_MILLIS),
     TimedTransition(&s[ST_WIFI_DISCONNECTED], &s[ST_REBOOT],WIFI_DISCONNECTED_TO_REBOOT_MILLIS)
 };

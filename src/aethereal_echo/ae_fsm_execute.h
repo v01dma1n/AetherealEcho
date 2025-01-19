@@ -13,11 +13,11 @@ void on_enter_ip_select();
 void on_exit_ip_select();
 void on_enter_ip_next();
 void on_enter_ping_sound_select();
-void on_enter_ping_sound_switch();
+void on_enter_ping_sound_toggle();
 void on_enter_alert_enabled_select();
-void on_enter_alert_enabled_switch();
+void on_enter_alert_enabled_toggle();
 void on_enter_wifi_alert();
-void on_enter_wifi_alert_switch();
+void on_enter_wifi_alert_toggle();
 void on_enter_wifi_disconnected();
 void on_enter_reboot();
 
