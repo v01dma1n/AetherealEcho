@@ -1,5 +1,4 @@
 #include "touch_timer.h"
-#include <ESPping.h>
 
 void TouchTimer::setup() {}
 
@@ -23,8 +22,7 @@ bool TouchTimer::loop() {
         }
       }
     } else { // touch not detected (anymore)
-      if (touchStartMillis >
-          0) { // if we are already measuring the touch length
+      if (touchStartMillis > 0) { // if we are already measuring the touch length
         // determine touch length
         unsigned long currMillis = millis();
         if (currMillis - touchStartMillis >= longTouchMillis) {
