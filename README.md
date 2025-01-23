@@ -20,7 +20,7 @@ The Aethereal Echo is a project that combines modern technology with a vintage a
 
 ### **Wi-Fi Access Monitoring**
 *   After a successful initial connection to a Wi-Fi network, the Aethereal Echo continuously monitors its connection status.
-*   If the Wi-Fi connection is lost, the device initiates an alert, which includes a sound and alternating red and blue flashing LEDs.
+*   If the Wi-Fi connection is lost, the meter indicates an "**No WiFi**" by moving to the maximum position on its scale (0 mTicks) and the device initiates an alert, which includes a sound and alternating red and blue flashing LEDs.
 *   The device will attempt to reconnect to the Wi-Fi network or reboot if reconnection fails.
 
 ### **Touch Controls**
