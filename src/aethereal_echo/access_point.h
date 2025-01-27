@@ -19,7 +19,13 @@ enum FormFieldIndex {
   NUM_FORM_FIELDS
 };
 
-enum PrefType { PREF_NONE, PREF_STRING, PREF_BOOL, PREF_INT, PREF_ENUM };
+enum PrefType { 
+  PREF_NONE, 
+  PREF_STRING, 
+  PREF_BOOL, 
+  PREF_INT, 
+  PREF_ENUM
+};
 
 enum FieldValidation {
   VALIDATION_NONE,
