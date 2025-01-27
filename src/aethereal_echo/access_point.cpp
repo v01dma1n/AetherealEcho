@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "AsyncTCP.h"
 #include "ESPAsyncWebServer.h"
 #include <DNSServer.h>
@@ -282,6 +284,11 @@ bool validateInput(String inp, FieldValidation validation) {
     ret = true;
     break;
 
+  case VALIDATION_INTEGER: 
+    ret = true;
+    // ToDo: validate integer
+    break;
+  
   case VALIDATION_IP_ADDRESS:
     IPAddress addr;
     ret = addr.fromString(inp.c_str());
@@ -398,6 +405,8 @@ void setupAP(const char *hostName) {
   appPrefs.getPreferences();
   appPrefs.dumpPreferences();
 }
+
+using namespace std;
 
 void processAPInput() {
   bool restart{false};
