@@ -3,7 +3,7 @@
 #define APP_DATE "2025-03-01"
 
 #define VER_MAJOR 0
-#define VER_MINOR 24
+#define VER_MINOR 25
 #define VER_BUILD 0
 
 #include <string>
@@ -41,15 +41,17 @@
 
 /* Version history
 
+2025-03-01 v.0.25 Beacon selection meter
+- Echo Timeout meter value
+- No Local Beacon meter value
+
 2025-03-01 v.0.24 LedRGB class renaming
 - Connecting to WiFi melody added.
 - Scale backlight added
 
-
 2025-01-18 v.0.23 No Newline fixed
 - No Newline fixed
 - References updated
-
 
 2025-01-18 v.0.22 The FSM graph construction fixed
 - The FSM graph construction fixed afer the code was lost.
@@ -57,7 +59,6 @@
 2025-01-17 v.0.21 FSM is now split into config and execute
 - FSM is now split into config and execute
 - AE is now on GitHub
-
 
 2025-01-15 v.0.20  Restored defaults for DNS servers
 - Restored defaults for DNS servers, which were removed after String to char* conversion
@@ -68,7 +69,6 @@
 
 2025-01-15 v.0.18 #issue011 Remove use of String wherever possible.
 - Sting not completely removed from AP since there is always reboot after the AP
-
 
 2025-01-14 v.0.17 refactoring & turn AP on when there is a ping alert
 - #issue010 Unable to turn AP on when there is a ping alert

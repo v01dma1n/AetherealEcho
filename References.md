@@ -1,6 +1,11 @@
 # Aethereal Echo
 List of external resources used during development of Aethereal Echo.
 
+
+## GitHub
+        https://github.com/v01dma1n/AetherealEcho
+
+
 ## Hardware
   HiLetgo ESP-WROOM-32 ESP32 ESP-32S Development Board
   HiLetgo 5V One Channel Relay Module

@@ -101,7 +101,7 @@ void on_enter_ping() {
             pingRGBTimer2.setTransitionMs(0);
             pingRGBTimer2.setOutput(pingIPColor.r, pingIPColor.g, pingIPColor.b);
             if (pingSoundOn)
-              playMelodyAsync(GPIO_BUZZER, MELODY_PING);
+                playMelodyAsync(GPIO_BUZZER, MELODY_PING);
             pingAlertCount = 0; // reset alert counter
             fsm.trigger(tr_ping_ok);
         } else { // ping failed
@@ -116,47 +116,59 @@ void on_enter_ping() {
 void on_enter_ping_alert() {
   // DBGLOG(Debug, "pingAlertCount=%d", pingAlertCount);
     pingAlertCount++;
+    meterOutTimer.setOutput(AE_PING_TIMEOUT);
     playMelodyAsync(GPIO_BUZZER, MELODY_PING_TIMEOUT);
      // restart the device if too many ping alerts occured
     if (pingAlertCount > MAX_PING_ALERT_COUNT) {
       nextDNSSever();
         // this should reboot the device
-       fsm.trigger(tr_ping_timeout_max);
+      fsm.trigger(tr_ping_timeout_max);
     }
-   // meterValue = 0;
 };
 
 void on_state_ping_alert() {
-  // DBGLOG(Debug, "pingAlertCount=%d", pingAlertCount);
+    // DBGLOG(Debug, "pingAlertCount=%d", pingAlertCount);
 };
 
 void on_enter_ip_select() {
     DBGLOG(Debug, ".");
     playMelodyAsync(GPIO_BUZZER, MELODY_DNS_SELECTION_MODE);
     int pingIPNum = appPrefs.getCurPingIPIndex();
-     RGB pingIPColor = pingIPColors[pingIPNum - 1];
+    RGB pingIPColor = pingIPColors[pingIPNum - 1];
     pingRGBTimer1.setTransitionMs(0);
     pingRGBTimer1.setOutput(pingIPColor.r, pingIPColor.g, pingIPColor.b);
     pingRGBTimer2.setTransitionMs(0);
     pingRGBTimer2.setOutput(pingIPColor.r, pingIPColor.g, pingIPColor.b);
-  // timedTransitions[TTR_IP_SELECT_TO_WIFI_CONNECTED].reset(); // reset timed
+    // timedTransitions[TTR_IP_SELECT_TO_WIFI_CONNECTED].reset(); // reset timed
     // transition out of this state
 };
 
 void on_exit_ip_select() { DBGLOG(Debug, "."); };
 
 void on_enter_ip_next() {
-   DBGLOG(Info, "Selecting next DNS server");
+    DBGLOG(Info, "Selecting next DNS server");
     playMelodyAsync(GPIO_BUZZER, MELODY_DNS_NEXT_SELECTED);
     nextDNSSever();
+    
+    int pingIPIndex = appPrefs.getCurPingIPIndex();
+
+    float pingMeter = pingIPMeter[pingIPIndex - 1];
+    meterOutTimer.setOutput(pingMeter);
+
+    // light up the LEDs at once, which will fade away afterwards
+    RGB pingIPColor = pingIPColors[pingIPIndex - 1];
+    pingRGBTimer1.setTransitionMs(0);
+    pingRGBTimer1.setOutput(pingIPColor.r, pingIPColor.g, pingIPColor.b);
+    pingRGBTimer2.setTransitionMs(0);
+    pingRGBTimer2.setOutput(pingIPColor.r, pingIPColor.g, pingIPColor.b);
+
     // 2025-01-12 #issue001
-    // the resed does not seem to work as the timed transition still is effective.
+    // the reset does not seem to work as the timed transition still is effective.
     // not sure if this is a but in the library or just wrong expectations
-     timedTransitions[TTR_IP_SELECT_TO_WIFI_CONNECTED]
+    timedTransitions[TTR_IP_SELECT_TO_WIFI_CONNECTED]
         .reset();  // reset timed transition out of this state
     fsm.trigger(tr_ip_select_done);
 };
-
 
 void on_enter_ping_sound_select() {
     DBGLOG(Debug, ".");
@@ -185,12 +197,10 @@ void on_enter_ping_sound_toggle() {
     // 2025-01-12 #issue001
     // the resed does not seem to work as the timed transition still is effective.
     // not sure if this is a but in the library or just wrong expectations
-       timedTransitions[TTR_PING_SOUND_SELECT_TO_WIFI_CONNECTED]
+    timedTransitions[TTR_PING_SOUND_SELECT_TO_WIFI_CONNECTED]
         .reset();  // reset timed transition out of this state
    fsm.trigger(tr_ping_sound_select_done);
 };
-
-;
 
 void on_enter_alert_enabled_select() {
     DBGLOG(Debug, ".");
@@ -201,7 +211,7 @@ void on_enter_alert_enabled_select() {
         meterOutTimer.setOutput(AE_OUTPUT_YES); // set the meter to point to Yes
         playMelodyAsync(GPIO_BUZZER, MELODY_SETTING_ON);
     } else {
-       DBGLOG(Info, "Alert is now: OFF");
+        DBGLOG(Info, "Alert is now: OFF");
         meterOutTimer.setOutput(AE_OUTPUT_NO); // set the meter to point to No
         playMelodyAsync(GPIO_BUZZER, MELODY_SETTING_OFF);
     }
@@ -210,21 +220,18 @@ void on_enter_alert_enabled_select() {
 void on_enter_alert_enabled_toggle() {
     DBGLOG(Debug, ".");
     // get the current state of the ping_sound
-   alertOn = appPrefs.config.alertOn;
+    alertOn = appPrefs.config.alertOn;
     // flip the current state of the ping sound
     appPrefs.config.alertOn = !appPrefs.config.alertOn;
     // save connfiguration
     appPrefs.putPreferences();
 };
 
-;
-
 void on_enter_wifi_alert() {
-  DBGLOG(Debug, ".");
+    DBGLOG(Debug, ".");
     wifiAlertCount++;
-     DBGLOG(Debug, "wifiAlertCount: %d", wifiAlertCount);
-    // show WiFi Disconnect Alert
-    // meterValue = 0;
+    DBGLOG(Debug, "wifiAlertCount: %d", wifiAlertCount);
+    meterOutTimer.setOutput(AE_NO_WIFI); 
 };
 
 bool wifiAlertOn {false};
@@ -236,31 +243,29 @@ void on_enter_wifi_alert_toggle(){
         pingRGBTimer1.setTransitionMs(0);
         pingRGBTimer1.setOutput(1, 0, 0);
          // fade away blue
-       pingRGBTimer2.setTransitionMs(WIFI_ALERT_TOGGLE_MILLIS);
-      pingRGBTimer2.setOutput(0, 0, 0);
+        pingRGBTimer2.setTransitionMs(WIFI_ALERT_TOGGLE_MILLIS);
+        pingRGBTimer2.setOutput(0, 0, 0);
     }
     else {
           // fade away red
-      pingRGBTimer1.setTransitionMs(WIFI_ALERT_TOGGLE_MILLIS);
-       pingRGBTimer1.setOutput(0, 0, 0);
-       // turn on blue instantaneously
+        pingRGBTimer1.setTransitionMs(WIFI_ALERT_TOGGLE_MILLIS);
+        pingRGBTimer1.setOutput(0, 0, 0);
+        // turn on blue instantaneously
         pingRGBTimer2.setTransitionMs(0);
-       pingRGBTimer2.setOutput(0, 0, 1);
+        pingRGBTimer2.setOutput(0, 0, 1);
     };
     playMelodyAsync(GPIO_BUZZER, MELODY_WIFI_DISCONNECTED);
-   fsm.trigger(tr_wifi_alert_toggle_end);
+    fsm.trigger(tr_wifi_alert_toggle_end);
 };
-
-
 
 void on_enter_wifi_disconnected() {
     DBGLOG(Debug, ".");
-   pingRGBTimer1.off();
-  pingRGBTimer2.off();
-   if (WiFiConnect(AP_HOST_NAME, appPrefs.config.ssid,
+    pingRGBTimer1.off();
+    pingRGBTimer2.off();
+    if (WiFiConnect(AP_HOST_NAME, appPrefs.config.ssid,
                     appPrefs.config.password, WIFI_CONN_ATTEMPTS)) {
         playMelodyAsync(GPIO_BUZZER, MELODY_WIFI_CONNECTED);
-       fsm.trigger(tr_wifi_connected);
+        fsm.trigger(tr_wifi_connected);
     } else
         fsm.trigger(tr_wifi_not_connected);
 };
@@ -270,6 +275,6 @@ void on_enter_reboot() {
     DBGLOG(Info, "Rebooting...");
     // the melody must be synchronous to be played before the reboot
     playMelody(GPIO_BUZZER, MELODY_SYSTEM_RESTART);
-   ESP.restart();
+    ESP.restart();
 };
 
