@@ -10,9 +10,11 @@
 #define GPIO_LED1_G 5
 #define GPIO_LED1_B 16
 
-#define GPIO_LED2_R 25
+#define GPIO_LED2_R 32 // 25
 #define GPIO_LED2_G 26
 #define GPIO_LED2_B 33
+
+#define GPIO_LED3    4
 
 // AE 
 #define AE_IP_CLOUDFLARE "1.1.1.1"
@@ -51,8 +53,8 @@
 
 extern MeterOutput meterOutTimer;
 extern bool wifiActive;
-extern PingRGB pingRGBTimer1;
-extern PingRGB pingRGBTimer2;
+extern LedRGB pingRGBTimer1;
+extern LedRGB pingRGBTimer2;
 
 extern RGB pingIPColors[AE_BEACON_COUNT];
 extern float pingIPMeter[AE_BEACON_COUNT];

@@ -1,9 +1,9 @@
 #define APP_NAME "Aethereal Echo"
 #define APP_AUTHOR "v01dma1n"
-#define APP_DATE "2025-01-18"
+#define APP_DATE "2025-03-01"
 
 #define VER_MAJOR 0
-#define VER_MINOR 23
+#define VER_MINOR 24
 #define VER_BUILD 0
 
 #include <string>
@@ -40,6 +40,11 @@
 */
 
 /* Version history
+
+2025-03-01 v.0.24 LedRGB class renaming
+- Connecting to WiFi melody added.
+- Scale backlight added
+
 
 2025-01-18 v.0.23 No Newline fixed
 - No Newline fixed

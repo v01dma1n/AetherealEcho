@@ -56,8 +56,10 @@ void on_enter_boot() {
                     appPrefs.config.password, WIFI_CONN_ATTEMPTS)) {
         playMelodyAsync(GPIO_BUZZER, MELODY_WIFI_CONNECTED);
         fsm.trigger(tr_wifi_connected);
-    } else
+    } else {
+        playMelodyAsync(GPIO_BUZZER, MELODY_WIFI_DISCONNECTED);
         fsm.trigger(tr_wifi_not_connected);
+    }
 };
 
 void on_enter_wifi_connected() {

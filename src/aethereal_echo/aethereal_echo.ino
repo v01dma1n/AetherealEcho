@@ -13,8 +13,10 @@
 #include "version.h"
 
 MeterOutput meterOutTimer(100, GPIO_PWM); // update output
-PingRGB pingRGBTimer1(10, GPIO_LED1_R, GPIO_LED1_G, GPIO_LED1_B);
-PingRGB pingRGBTimer2(10, GPIO_LED2_R, GPIO_LED2_G, GPIO_LED2_B);
+LedRGB pingRGBTimer1(10, GPIO_LED1_R, GPIO_LED1_G, GPIO_LED1_B);
+LedRGB pingRGBTimer2(10, GPIO_LED2_R, GPIO_LED2_G, GPIO_LED2_B);
+
+#define SCALE_LED_PERIOD_MS 3000
 
 RGB pingIPColors[PING_IP_COUNT];
 float pingIPMeter[PING_IP_COUNT];
@@ -45,6 +47,48 @@ String ip2Str(IPAddress ip) {
   }
   return s;
 }
+
+//#define CALIBRATION
+
+#ifdef CALIBRATION
+
+struct CalibrationStep {
+  int outputValue; // Value to set the meter output
+  int delayTime; 
+  // String stepName; // Descriptive name for the step
+};
+
+const int numCalibrationSteps = 5; 
+std::vector<CalibrationStep> calibrationSteps;
+
+void calibrationSetup() {
+  calibrationSteps.push_back({   1, 5000});
+  calibrationSteps.push_back({  10, 5000});
+  calibrationSteps.push_back({ 100, 5000});
+  calibrationSteps.push_back({ 500, 5000});
+  calibrationSteps.push_back({1000, 5000});
+}
+
+int calibrationStep {0};
+unsigned long lastCalibrationStepMillis {0};
+
+void calibrationLoop() {
+
+  const CalibrationStep& currentStep = calibrationSteps[calibrationStep];
+
+  if (lastCalibrationStepMillis + currentStep.delayTime < millis())
+  {
+    lastCalibrationStepMillis = millis();
+    calibrationStep++;
+    if (calibrationStep >= numCalibrationSteps)
+      calibrationStep = 0;
+
+    DBGLOG(Info, "Step: %d", calibrationStep);
+    meterOutTimer.setOutput(currentStep.outputValue);
+  }
+}
+#endif // CALIBRATION
+
 
 void setup() {
 
@@ -78,8 +122,8 @@ void setup() {
   pingIPMeter[2] = AE_OUTPUT_BEACON3;
   pingIPMeter[3] = AE_OUTPUT_BEACON4;
 
-  // appPrefs.ssid = "AE_WiFi";
-  // appPrefs.password = "";
+  // strncpy(appPrefs.config.ssid, "", sizeof(appPrefs.config.ssid));
+  // strncpy(appPrefs.config.password, "", sizeof(appPrefs.config.password));
   // appPrefs.putPreferences();
 
   debugTimer.setCanRestart(true);
@@ -96,10 +140,13 @@ void setup() {
   pinMode(GPIO_SWITCH, INPUT_PULLUP);
   pinMode(GPIO_LAMP, OUTPUT);
   pinMode(GPIO_BUZZER, OUTPUT);
+  pinMode(GPIO_LED3, OUTPUT);
 
   meterOutTimer.setup();
   pingRGBTimer1.setup();
   pingRGBTimer2.setup();
+
+  digitalWrite(GPIO_LED3, 1); // turn on the backlight
 
   touchAPTimer.setup();
   touchAttachInterrupt(T7, gotTouch1, touchThreshold);
@@ -120,12 +167,31 @@ void setup() {
   DBGLOG(Info, "\n%s v.%s, %s, %s\n", APP_NAME, VERSION_STRING.c_str(),
          APP_DATE, APP_AUTHOR)
 
+#ifdef CALIBRATION
+  calibrationSetup();
+#endif
+
 } // setup()
 
 void gotTouch1() { touch1detected = true; }
 void gotTouch2() { touch2detected = true; }
 void gotTouch3() { touch3detected = true; }
 void gotTouch4() { touch4detected = true; }
+
+#ifdef CALIBRATION
+void loop() {
+
+  calibrationLoop();
+
+  // if (wifiActive) {
+  //   if (timeAvail)
+  //     loopSntpGetTime(NTP_REFRESH_INTERVAL_MILLIS);
+  // }
+
+  meterOutTimer.loop();
+}
+
+#else // not a CALIBRATION - normal function
 
 void loop() {
 
@@ -142,7 +208,6 @@ void loop() {
 
   pingRGBTimer1.loop();
   pingRGBTimer2.loop();
-
   meterOutTimer.loop();
 
   melody_loop();
@@ -207,3 +272,5 @@ void loop() {
     }
   }
 }
+
+#endif

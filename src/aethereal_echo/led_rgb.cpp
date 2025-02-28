@@ -3,7 +3,7 @@
 
 #include "led_rgb.h"
 
-double PingRGB::calcVal(double delta, double newVal, double val) {
+double LedRGB::calcVal(double delta, double newVal, double val) {
   double retVal = val;
   if (delta != 0) {
     if (newVal > val) {
@@ -24,7 +24,7 @@ double PingRGB::calcVal(double delta, double newVal, double val) {
   return retVal;
 }
 
-void PingRGB::ledOutput() {
+void LedRGB::ledOutput() {
 
   valR = calcVal(deltaR, newValR, valR);
   valG = calcVal(deltaG, newValG, valG);
@@ -37,11 +37,11 @@ void PingRGB::ledOutput() {
   ledcWrite(pinB, RGB_MAX_DUTY_CYCLE * valB);
 }
 
-void PingRGB::setTransitionMs(unsigned transitionMs) {
+void LedRGB::setTransitionMs(unsigned transitionMs) {
   this->transitionsMs = transitionMs;
 };
 
-void PingRGB::setOutput(double valR, double valG, double valB) {
+void LedRGB::setOutput(double valR, double valG, double valB) {
   if (valR < 0.0)
     valR = 0.0;
   else if (valR > 1.0)
@@ -78,17 +78,23 @@ void PingRGB::setOutput(double valR, double valG, double valB) {
   };
 };
 
-void PingRGB::setup() {
+void LedRGB::setup() {
 
-  pinMode(pinR, OUTPUT);
-  pinMode(pinG, OUTPUT);
-  pinMode(pinB, OUTPUT);
-  ledcAttach(pinR, RGB_PWM_FREQ, RGB_PWM_RESOLUTION);
-  ledcAttach(pinG, RGB_PWM_FREQ, RGB_PWM_RESOLUTION);
-  ledcAttach(pinB, RGB_PWM_FREQ, RGB_PWM_RESOLUTION);
+  if (pinR != 0) {
+    pinMode(pinR, OUTPUT);
+    ledcAttach(pinR, RGB_PWM_FREQ, RGB_PWM_RESOLUTION);
+  }
+  if (pinG != 0) {
+    pinMode(pinG, OUTPUT);
+    ledcAttach(pinG, RGB_PWM_FREQ, RGB_PWM_RESOLUTION);
+  }
+  if (pinB != 0) {
+    pinMode(pinB, OUTPUT);
+    ledcAttach(pinB, RGB_PWM_FREQ, RGB_PWM_RESOLUTION);
+  }
 }
 
-void PingRGB::loop() {
+void LedRGB::loop() {
 
   if (timerOutputMillis.isRunning() && timerOutputMillis.isTrigger()) {
     timerOutputMillis.timerStart();

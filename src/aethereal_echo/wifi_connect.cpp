@@ -5,6 +5,7 @@
 #include "aethereal_echo.h"
 #include "app_pref.h"
 #include "wifi_connect.h"
+#include "melody.h"
 #include <ESPping.h>
 
 bool WiFiConnect(const char *host, const char *ssid, const char *pass,
@@ -20,7 +21,8 @@ bool WiFiConnect(const char *host, const char *ssid, const char *pass,
 
   unsigned waitCnt = 0;
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    // delay(500);  // ToDo: play melody instead
+    playMelody(GPIO_BUZZER, MELODY_WIFI_CONNECTED);
     DBGLOG(Debug, ".");
     waitCnt++;
     if (waitCnt > attempts) {

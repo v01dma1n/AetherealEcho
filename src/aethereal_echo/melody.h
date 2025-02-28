@@ -11,6 +11,7 @@ struct Note {
 
 // Define enums for melody names and number of melodies
 enum MelodyName {
+  MELODY_WIFI_CONNECTING,
   MELODY_WIFI_CONNECTED,
   MELODY_WIFI_DISCONNECTED,
   MELODY_AP_STARTED,

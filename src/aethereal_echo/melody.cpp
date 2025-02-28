@@ -5,6 +5,9 @@
 #include "melody.h"
 
 // Define melodies
+Note melodyWiFiConnecting[] = {
+    {NOTE_B0, 250}, {NOTE_B1, 250}};
+
 Note melodyWiFiConnected[] = {
     {NOTE_C4, 250}, {NOTE_E4, 250}, {NOTE_G4, 500}, {NOTE_G4, 500}};
 
@@ -43,6 +46,7 @@ Note melodySettingOff[] = {{NOTE_B0, 100}, {NOTE_B0, 100}, {NOTE_B0, 100}};
 
 // Store melodies in an array
 Note *melodies[NUM_OF_MELODIES] = {
+    melodyWiFiConnecting,
     melodyWiFiConnected, melodyWiFiDisconnected, melodyAPStarted,
     melodySystemRestart, melodyDNSSelectionMode, melodyDNSNextSelected,
     melodyPing,          melodyPingTimeout,      melodyPingAlert,
@@ -50,6 +54,7 @@ Note *melodies[NUM_OF_MELODIES] = {
 
 // Define the length of each melody
 int melodyLengths[NUM_OF_MELODIES] = {
+    sizeof(melodyWiFiConnecting) / sizeof(melodyWiFiConnecting[0]),
     sizeof(melodyWiFiConnected) / sizeof(melodyWiFiConnected[0]),
     sizeof(melodyWiFiDisconnected) / sizeof(melodyWiFiDisconnected[0]),
     sizeof(melodyAPStarted) / sizeof(melodyAPStarted[0]),
@@ -119,7 +124,7 @@ void melody_loop() {
         tone(currentMelody.gpio, melody[currentMelody.noteIndex].note,
              noteDuration); // Play the note
         currentMelody.startTime = millis();
-        currentMelody.noteIndex++;
+        currentMelody.noteIndex = currentMelody.noteIndex +1;
         if (currentMelody.noteIndex >= length) {
           noTone(currentMelody.gpio);
           isPlaying = false;

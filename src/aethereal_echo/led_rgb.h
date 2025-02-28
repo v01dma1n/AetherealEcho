@@ -15,7 +15,7 @@ struct RGB {
   double b;
 };
 
-class PingRGB {
+class LedRGB {
 
 protected:
   double valOutput;
@@ -29,7 +29,7 @@ protected:
   double calcVal(double delta, double newVal, double val);
 
 public:
-  PingRGB(unsigned long interval, unsigned pinR, unsigned pinG, unsigned pinB)
+  LedRGB(unsigned long interval, unsigned pinR, unsigned pinG=0, unsigned pinB=0)
       : timerOutputMillis(interval) {
     this->pinR = pinR;
     this->pinG = pinG;
@@ -38,7 +38,7 @@ public:
   void setup();
   void loop();
   // the output can be set from 0 to 1
-  void setOutput(double valR, double valG, double valB);
+  void setOutput(double valR, double valG=0, double valB=0);
   void setTransitionMs(unsigned transitionMs);
   TimerMillis timerOutputMillis{0};
   void off() {
